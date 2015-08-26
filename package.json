@@ -1,0 +1,18 @@
+{
+  "name": "sudoku_solver",
+  "version": "1.0.0",
+  "description": "A modular sudoku solver project",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "async": "node extras/async-demo.js"
+  },
+  "author": "Dan Bauer",
+  "license": "http://creativecommons.org/licenses/by-nc-sa/4.0/",
+  "dependencies": {
+    "chai": "^3.2.0",
+    "lodash": "^3.10.1",
+    "mocha": "^2.2.5",
+    "moment": "^2.10.6"
+  }
+}
