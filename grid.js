@@ -1,148 +1,119 @@
-Grid = ( function(){
+var DigitSet = require( './digitset.js' );
 
-	function grid ( initialString ) {
+Grid = ( function(){	//start of constructor
 
-		var intialValues = initialString.split(' ');
+	function grid ( initialString ) {		//start of instance
 
-		for ( var i = 1; i < 82; i++ ){
-			if ( initialValues[ i - 1 ] !== '.' ){
-				this.i = new DigitSet ( initialValue[ i - 1 ] );
+		var initialValues = initialString.split('');	//convert starting game data to array
+
+		for ( var i = 0; i < 81; i++ ){		//generate the digitSet squares
+				this[i] = new DigitSet ( initialValues[ i ] );
+		}
+
+		this.row = function(rowNumber) {	//anonymous row math
+			var row = [];
+			
+			for (var i = 0; i < 81; i++) {
+				if ( Math.floor( i/9 ) === rowNumber) {
+					row.push(this[i]);
+				}
 			}
-			else {
-				this.i = new DigitSet ( ? )
+
+		    return row;
+		}
+
+    	this.row0 = this.row(0);
+    	this.row1 = this.row(1);
+    	this.row2 = this.row(2);
+    	this.row3 = this.row(3);
+    	this.row4 = this.row(4);
+    	this.row5 = this.row(5);
+    	this.row6 = this.row(6);
+    	this.row7 = this.row(7);
+    	this.row8 = this.row(8);
+
+		this.column = function(columnNumber) {	//anonymous column math
+			
+			var column = [];
+			
+			for (var i = 0; i < 81; i++) {
+				if (	(i % 9) === columnNumber) {
+					column.push(this[i]);
+				}
 			}
+			
+			return column
 		}
-	};
+	  
+	  	this.column0 = this.column(0);
+		this.column1 = this.column(1);
+		this.column2 = this.column(2);
+		this.column3 = this.column(3);
+		this.column4 = this.column(4);
+		this.column5 = this.column(5);
+		this.column6 = this.column(6);
+		this.column7 = this.column(7);
+		this.column8 = this.column(8);
 
-//Row Methods
-	grid.row = function(rowNumber) {
-		var row = [];
-		for (var i = 1; i <= 81; i++) {
-			if (	Math.ceil(i/9)	== rowNumber) {
-				row.push(this[i]);
+
+		this.box = function(boxNumber) {	//anonymous box math
+
+			var box = [];
+	   
+			for (var i = 0; i < 81; i++) {
+	      		      
+				var row = Math.floor( i/9);
+				var col = (i % 9);
+				var boxValue = ( Math.floor(row/3) * 3 ) + ( Math.floor(col/3) );
+
+				if (boxValue == boxNumber) {
+					box.push(this[i]);
+				}
 			}
+		
+			return box;
 		}
-	},
-	grid.row1 = grid.row(1),
-	grid.row2 = grid.row(2),
-	grid.row3 = grid.row(3),
-	grid.row4 = grid.row(4),
-	grid.row5 = grid.row(5),
-	grid.row6 = grid.row(6),
-	grid.row7 = grid.row(7),
-	grid.row8 = grid.row(8),
-	grid.row9 = grid.row(9),
+		  
+	  	this.box0 = this.box(0);
+	  	this.box1 = this.box(1);
+	  	this.box2 = this.box(2);
+	  	this.box3 = this.box(3);
+	  	this.box4 = this.box(4);
+	  	this.box5 = this.box(5);
+	  	this.box6 = this.box(6);
+	  	this.box7 = this.box(7);
+	  	this.box8 = this.box(8);
 
-//Column Methods
-	grid.column = function(columnNumber) {
-		var column = [];
-		for (var i = 1; i <=81; i++) {
-			if (	(i % 9) == columnNumber)	) {
-				column.push(this[i]);
-			}
-		}
-		return column;
-	},
-	grid.column1 = grid.column(1),
-	grid.column2 = grid.column(2),
-	grid.column3 = grid.column(3),
-	grid.column4 = grid.column(4),
-	grid.column5 = grid.column(5),
-	grid.column6 = grid.column(6),
-	grid.column7 = grid.column(7),
-	grid.column8 = grid.column(8),
-	grid.column9 = grid.column(9),
+	} //end of instance function
+
+	return grid  //return an instance
+
+}) () //end IFFE
 
 
-/* OLD VERSIONS OF COLUMN AND ROW GETTERS
+// var testString = '.94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..';
+// var tester = new Grid( testString );
 
-----------COLUMN
+// console.log( 'object ' + tester );
+// console.log( 'array of ten, all true ' + tester[0].possibilities );
 
-function () {
-	var column = [];
-	for (var i = 1; i <= 81; i++) {
-		if (	(i % 9) == 1	) {
-			column.push(this[i]);
-		}
-	}
-	return column;
-},
 
----------ROW
-function () {
-	var row = [];
-	for (var i = 1; i <= 81; i++) {
-		if (	Math.ceil(i / 9) == 1 ) {
-			row.push(this[i]);
-		}
-	}
-	return row;
-},
+// console.log( 'array of 9 ' + tester.row0 );
+// console.log( ' 9 ' + tester.row0.length );
+// console.log( 'array of 10, all true ' + tester.row0[0].possibilities );
 
-*/
+// console.log( 'array of 9 ' + tester.column0 );
+// console.log( ' 9 ' + tester.column0.length );
+// console.log( 'array of 10 all true ' + tester.column0[0].possibilities );
 
-	grid.box = function(boxNumber) {
-
-		var xBoxNumber = boxNumber;
-		var box = [];
-
-		for (var i = 1; i <= 81; i++) {
-			var row = Math.ceil(i/9);
-			var col = i % 9;
-			var boxValue = Math.floor(row/3) * 3 + Math.floor(col/3);
-
-			if (boxValue == boxNumber) {
-				box.push(this[i]);
-			}
-		}
-		return box;
-	},
-	grid.box1 = grid.box(1);
-	grid.box2 = grid.box(2);
-	grid.box3 = grid.box(3);
-	grid.box4 = grid.box(4);
-	grid.box5 = grid.box(5);
-	grid.box6 = grid.box(6);
-	grid.box7 = grid.box(7);
-	grid.box8 = grid.box(8);
-	grid.box9 = grid.box(9);
+// console.log( 'array of 9 ' + tester.box0 );
+// console.log( ' 9 ' + tester.box0.length );
+// console.log( 'array of 10 all true ' + tester.box0[0].possibilities );
 
 
 
 
 
-	grid.prototype.cells = function () {
-		return array;
-	}
-	grid.prototype.cells = function () {
-		return array;
-	}
-	grid.prototype.cells = function () {
-		return array;
-	}
-	grid.prototype.cells = function () {
-		return array;
-	}
-	grid.prototype.cells = function () {
-		return array;
-	}
-	grid.prototype.cells = function () {
-		return array;
-	}
-	grid.prototype.cells = function () {
-		return array;
-	}
-
-	return grid;
-
-})();
 
 
 
-var grid1 = new Grid(string)
-
-grid1.cells()
-
-grid1.0.update(newvalues) => this._(newvalue)
-
-grid1.update(0, newvalues)
