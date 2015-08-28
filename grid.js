@@ -92,7 +92,7 @@ Grid = ( function(){	//start of constructor
 	  	// QUERY METHODS
 	  	//======================================================
 
-
+	  	
 
 	} //end of instance function
 
