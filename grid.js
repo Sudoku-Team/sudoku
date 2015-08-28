@@ -1,8 +1,12 @@
-var DigitSet = require( './digitset.js' );
+// var DigitSet = require( './digitset.js' );
+// var Viewer = require('./viewer.js');
 
 Grid = ( function() {	//start of constructor
-	function grid ( initialString ) {		//start of instance
+
+	function grid ( initialString ) { 		//start of instance
+
 		var initialValues = initialString.split('');	//convert starting game data to array
+
 		for ( var i = 0; i < 81; i++ ){		//generate the digitSet squares
 				this[i] = new DigitSet ( initialValues[ i ] );
 		}
@@ -10,7 +14,6 @@ Grid = ( function() {	//start of constructor
 
 		//	GROUPING METHODS: ROW, COLUMN, BOXES
 		//======================================================
-
 
 		this.row = function(rowNumber) {	//anonymous row math
 			var row = [];
@@ -134,14 +137,14 @@ Grid = ( function() {	//start of constructor
 			getGroups.push("box" + boxNumber);
 			return getGroups;
 		};
-				// Alternate Method Returning Digiset
+				/* // Alternate Method Returning Digiset
 				// this.cellsGroupToken = function(cellToken) {
 				// 	var getGroups = [];
 				// 	var columnNumber = cellToken % 9;
 				// 	var rowNumber = Math.floor(cellToken / 9);
 				// 	var boxNumber = ( Math.floor(rowNumber/3) * 3 ) + ( Math.floor(columnNumber/3) );
 				// 	getGroups.push(this["column" + columnNumber]);
-				// 	getGroups.push(this["row" + rowNumber]);
+				// 	getGroups.push(this["row" + rowNumber]);*/
 				// 	getGroups.push(this["box" + boxNumber]);
 				// 	return getGroups;
 				// };
@@ -268,7 +271,6 @@ Grid = ( function() {	//start of constructor
 		};
 
 		this.getNeighborhood = function ( cellToken ) {
-
       	var answer = new DigitSet();
 
       	var rowToken = this.getRowCellToken( cellToken );
@@ -284,7 +286,6 @@ Grid = ( function() {	//start of constructor
       	answer.addSet ( boxPossibilities );
 
       	return answer;
-
       };
 
 		this.groupNeeds = function (groupToken){
@@ -297,8 +298,7 @@ Grid = ( function() {	//start of constructor
          return response;
       };
 
-
-
+  
 
 	} //end of instance function
 

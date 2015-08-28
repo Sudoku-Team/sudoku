@@ -1,3 +1,6 @@
+// var Grid = require( './grid.js' );
+// var Viewer = require('./viewer.js');
+
 DigitSet = ( function ( ) {
 
   	function digitSet ( digit ) {
