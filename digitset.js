@@ -1,7 +1,8 @@
 DigitSet = ( function ( ) {
 
   	function digitSet ( digit ) {
-  
+
+
 	   	this.possibilities = [];
 		this.possibilities.length = 10;
 
@@ -13,7 +14,7 @@ DigitSet = ( function ( ) {
 			return;
 		}
 
-		if (digit !== '.' ) { 
+		if (digit !== '.' ) {
 			this.possibilities[digit] = true;
 		}
 
@@ -21,32 +22,35 @@ DigitSet = ( function ( ) {
 			for ( var i = 0; i < 10; i++ ) {
 				this.possibilities[i] = true;
 			}
-		}   
+		}
 	}
 
 	digitSet.prototype.set = function ( array ) {
-		
+
+
 		//change all the indexes of possibilities
 		//cooresponding to numbers in the array to be possible
+
 		//array = [0, 1, 2]
     	//this.possibilities = [false, false, false, false...]
     	//RETURN this.possibilities => [true, true, true, false...]
     	//does the key name = any value in array?
     	// i.e. does array have 0 as a value? then key 0 should be true
-    
-    
+
+
 		for (var i = 0; i < 10; i++ ){
 
 			for ( var j = 0; j < array.length; j++ ){
         		if ( array[j] === i ){
-        			
+
         			if ( array[j] === '.' ){
         				return;
         			}
-        			
+
         			else {
-						this.possibilities[i] = true;	
+						this.possibilities[i] = true;
 					}
+
 				}
 			}
 		}
@@ -79,7 +83,7 @@ DigitSet = ( function ( ) {
         		array.push( i );
         	}
     	}
-    
+
 		return array;
 	}
 
@@ -102,7 +106,7 @@ DigitSet = ( function ( ) {
 				this.eliminate( i );
 			}
 		}
-	}	
+	}
 
 	digitSet.prototype.size = function (){
 		//how many numbers are still possible here?
@@ -117,7 +121,7 @@ DigitSet = ( function ( ) {
 		return array.length;
 	}
 
-	
+
 
 
 
@@ -126,7 +130,7 @@ DigitSet = ( function ( ) {
 	//the square IS uncertain.
 
     digitSet.prototype.isUncertain = function() {
-     	
+
      	var array = [];
 
       	for (var i = 0; i < 10; i++){
@@ -143,9 +147,9 @@ DigitSet = ( function ( ) {
     	else {
     		return false;
     	}
-	}	
+	}
 
-	
+
 
 	digitSet.prototype.string = function () {
 		var array = [];
