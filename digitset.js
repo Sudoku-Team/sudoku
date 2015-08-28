@@ -70,6 +70,19 @@ DigitSet = ( function ( ) {
 		return array;
 	}
 
+  	digitSet.prototype.arrayPossible = function () {
+		var array = [];
+
+		for (var i = 0; i < 10; i++){
+
+        	if ( this.possibilities[i] === true ){
+        		array.push( i );
+        	}
+    	}
+    
+		return array;
+	}
+
 	digitSet.prototype.add = function ( digit ) {
 		this.possibilities[ digit ] = true;
 	}
