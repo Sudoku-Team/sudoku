@@ -10,6 +10,11 @@ Grid = ( function(){	//start of constructor
 				this[i] = new DigitSet ( initialValues[ i ] );
 		}
 
+
+		//	GROUPING METHODS: ROW, COLUMN, BOXES
+		//======================================================
+
+
 		this.row = function(rowNumber) {	//anonymous row math
 			var row = [];
 			
@@ -83,6 +88,11 @@ Grid = ( function(){	//start of constructor
 	  	this.box6 = this.box(6);
 	  	this.box7 = this.box(7);
 	  	this.box8 = this.box(8);
+
+	  	// QUERY METHODS
+	  	//======================================================
+
+
 
 	} //end of instance function
 
