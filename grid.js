@@ -1,44 +1,5 @@
 var DigitSet = require( './digitset.js' );
 
-
-DigitSet = ( function ( ) {
-
-  	function digitSet ( digit ) {
-
-   	this.possibilities = [];
-		this.possibilities.length = 10;
-
-
-   for ( var i = 0; i < 10; i++ ) {
-			this.possibilities[i] = false;
-
-		}
-
-		if (digit !== '.' ) {
-			this.possibilities[digit] = true;
-
-		}
-
-		else {
-			for ( var i = 0; i < 10; i++ ) {
-				this.possibilities[i] = true;
-
-			}
-		}
-	}
-
-	digitSet.prototype.update = function ( digit ) {
-		this.possibilities[ digit ] = true;
-	};
-
-	return digitSet;
-
-})();
-
-
-
-
-
 Grid = ( function() {	//start of constructor
 	function grid ( initialString ) {		//start of instance
 		var initialValues = initialString.split('');	//convert starting game data to array
@@ -244,6 +205,20 @@ Grid = ( function() {	//start of constructor
 			}
 			return allBoxes;
 		};
+
+		grid.groupHas = function (groupToken){
+  
+  			var response = new DigitSet();
+  
+	  		this[groupToken].forEach( function( element ){
+   
+		    if ( element.size() === 1 ) {
+		      response.addSet( element )
+		   }
+  		})
+  
+  return response;
+}
 
 
 	} //end of instance function
