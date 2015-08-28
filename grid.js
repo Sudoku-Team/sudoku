@@ -101,7 +101,6 @@ Grid = ( function() {	//start of constructor
 
       this.cellsGroupToken = function(groupToken) {
          var array = [];
-                  console.log(this[groupToken]);
          this[groupToken].forEach( function( element ) { array.push( element.name ) } );
          return array;
       };
@@ -225,7 +224,6 @@ Grid = ( function() {	//start of constructor
          return response;
       };
 
-
       this.getPossible = function(cellToken) {
          return this[cellToken].array();
       };
@@ -257,16 +255,56 @@ Grid = ( function() {	//start of constructor
       };
 
       this.restore = function(string) {
-         this = new Grid(string)
+         return new Grid(string);
       };
+
+		//Takes Cell Token; Returns Box Token
+		this.getBoxCellToken = function(cellToken) {
+			var columnNumber = cellToken % 9;
+			var rowNumber = Math.floor(cellToken / 9);
+			var boxNumber = ( Math.floor(rowNumber/3) * 3 ) + ( Math.floor(columnNumber/3) );
+
+			return "box" + boxNumber;
+		};
+
+		this.getNeighborhood = function ( cellToken ) {
+
+      	var answer = new DigitSet();
+
+      	var rowToken = this.getRowCellToken( cellToken );
+      	var rowPossibilities = this.groupHas( rowToken );
+      	answer.addSet ( rowPossibilities );
+
+      	var columnToken = this.getColCellToken( cellToken );
+      	var columnPossibilities = this.groupHas( columnToken );
+      	answer.addSet ( columnPossibilities );
+
+      	var boxToken = this.getBoxCellToken( cellToken );
+      	var boxPossibilities = this.groupHas( boxToken );
+      	answer.addSet ( boxPossibilities );
+
+      	return answer;
+
+      };
+
+		this.groupNeeds = function (groupToken){
+  			var response = new DigitSet('.');
+	  		this[groupToken].forEach( function( element ){
+		      if ( element.size() === 1 ) {
+		      response.eliminateSet( element );
+            }
+  		   });
+         return response;
+      };
+
+
+
 
 	} //end of instance function
 
 	return grid;  //return an instance
 
 })(); //end IFFE
-
-
 
 
 var testString = '.94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..';
