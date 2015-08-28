@@ -1,12 +1,10 @@
-//var grid = require('./grid.js');
-
-var testString = '.14...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4...';
-
+var Grid = require('./grid.js');
+var DigitSet = require ('./digitset.js');
 function printBoard ( string ) {
   var stringArray = [];
 
   for ( var i = 0; i < 9; i++ ){
-    stringArray.push( testString.slice( (9*i), (9*i + 9) ) )
+    stringArray.push( string.slice( (9*i), (9*i + 9) ) )
   }
 
   var row0 = stringArray[0];  
@@ -45,8 +43,6 @@ function printBoard ( string ) {
 
     return board;
   }
-
-var testBoard = buildBoard( testString );
-
-console.log( testBoard );
+  
+  console.log( buildBoard (string) );
 }

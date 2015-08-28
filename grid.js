@@ -1,4 +1,5 @@
-var DigitSet = require( './digitset.js' );
+// var DigitSet = require( './digitset.js' );
+// var Viewer = require('./viewer.js');
 
 Grid = ( function() {	//start of constructor
 	function grid ( initialString ) {		//start of instance
@@ -257,8 +258,29 @@ Grid = ( function() {	//start of constructor
       };
 
       this.restore = function(string) {
-         this = new Grid(string)
+         return new Grid(string)
       };
+
+
+      this.getNeighborhood = function ( cellToken ) {
+      	
+      	var answer = new DigitSet();
+
+      	var rowToken = this.getRowCellToken( cellToken );
+      	var rowPossibilities = this.groupHas( rowToken );
+      	answer.addSet ( rowPossibilities );
+
+      	var columnToken = this.getColCellToken( cellToken );
+      	var columnPossibilities = this.groupHas( columnToken );
+      	answer.addSet ( columnPossibilities );
+
+      	var boxToken = this.getBoxCellToken( cellToken );
+      	var boxPossibilities = this.groupHas( boxToken );
+      	answer.addSet ( boxPossibilities );
+
+      	return answer;
+
+      }
 
 	} //end of instance function
 
