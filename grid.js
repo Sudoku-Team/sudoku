@@ -11,29 +11,134 @@ DigitSet = ( function ( ) {
 
    for ( var i = 0; i < 10; i++ ) {
 			this.possibilities[i] = false;
-
 		}
 
 		if (digit !== '.' ) {
 			this.possibilities[digit] = true;
-
 		}
 
 		else {
 			for ( var i = 0; i < 10; i++ ) {
 				this.possibilities[i] = true;
-
 			}
 		}
 	}
 
-	digitSet.prototype.update = function ( digit ) {
-		this.possibilities[ digit ] = true;
-	};
+	digitSet.prototype.update = function ( digit, boolean ) {
+		this.possibilities[ digit ] = boolean;
+	}
+
+	digitSet.prototype.size = function (){
+		//how many numbers are still possible here?
+		var array = [];
+
+		for ( var i = 0; i < 10; i++ ){
+			if ( this.possibilities[i] === true ){
+				array.push( this.possibilities[i] );
+			}
+		}
+
+		return array.length;
+	}
+
+	digitSet.prototype.set = function ( array ) {
+
+		//change all the numbers in the array to be possible
+		//array = [0, 1, 2]
+    	//this.possibilities = [false, false, false, false...]
+    	//RETURN this.possibilities => [true, true, true, false...]
+    	//does the key name = any value in array?
+    	// i.e. does array have 0 as a value? then key 0 should be true
+
+
+		for (var i = 0; i < 10; i++ ){
+
+			for ( var j = 0; j < array.length; j++ ){
+        if ( array[j] === i ){
+					this.possibilities[i] = true;
+				}
+			}
+		}
+
+		return this.possibilities;
+	}
+
+
+
+	//This report true if more than one value of this.possibilities is true.
+	//in other words, if more than one value is possible at a square,
+	//the square IS uncertain.
+
+    digitSet.prototype.isUncertain = function() {
+
+     	var array = [];
+
+      	for (var i = 0; i < 10; i++){
+
+        	if ( this.possibilities[i] === true ){
+        		array.push( "i: " + i + ' true' )
+        	}
+		}
+
+		if (array.length > 1) {
+			return true;
+    	}
+
+    	else {
+    		return false;
+    	}
+	}
+
+	digitSet.prototype.array = function () {
+		var array = [];
+
+		for (var i = 0; i < 10; i++){
+
+        	if ( this.possibilities[i] === true ){
+        		array.push( i );
+        	}
+        	else {
+        		array.push( '.' );
+        	}
+		}
+
+		return array;
+	}
+
+	digitSet.prototype.string = function () {
+		var array = [];
+
+		for (var i = 0; i < 10; i++){
+
+        	if ( this.possibilities[i] === true ){
+        		array.push( i );
+        	}
+        	else {
+        		array.push( '.' );
+        	}
+		}
+
+		var string = array.join(' ');
+
+		return string;
+	}
+
+   digitSet.prototype.arrayPossible = function () {
+    var array = [];
+
+    for (var i = 0; i < 10; i++){
+      if ( this.possibilities[i] === true ){
+          array.push( i );
+         }
+   }
+
+    return array;
+};
 
 	return digitSet;
 
 })();
+
 
 
 
@@ -56,6 +161,7 @@ Grid = ( function() {	//start of constructor
 			for (var i = 0; i < 81; i++) {
 				if ( Math.floor( i/9 ) === rowNumber) {
 					row.push(this[i]);
+               this[i].name = i;
 				}
 			}
 		    return row;
@@ -76,6 +182,7 @@ Grid = ( function() {	//start of constructor
 			for (var i = 0; i < 81; i++) {
 				if (	(i % 9) === columnNumber) {
 					column.push(this[i]);
+               this[i].name = i;
 				}
 			}
 			return column;
@@ -99,6 +206,7 @@ Grid = ( function() {	//start of constructor
 				var boxValue = ( Math.floor(row/3) * 3 ) + ( Math.floor(col/3) );
 				if (boxValue == boxNumber) {
 					box.push(this[i]);
+               this[i].name = i;
 				}
 			}
 			return box;
@@ -118,8 +226,6 @@ Grid = ( function() {	//start of constructor
 	  	// QUERY METHODS
 	  	//======================================================
 
-
-
 		//Array of All Cell Tokens
 		this.cells = function() {
 			var cellsArray = [];
@@ -136,6 +242,13 @@ Grid = ( function() {	//start of constructor
 				// 	}
 				// 	return cellsArray;
 				// };
+
+      this.cellsGroupToken = function(groupToken) {
+         var array = [];
+                  console.log(this[groupToken]);
+         this[groupToken].forEach( function( element ) { array.push( element.name ) } );
+         return array;
+      };
 
 		//Array of groupTokens (all rows)
 		// grid__method--groups() #13
@@ -245,6 +358,58 @@ Grid = ( function() {	//start of constructor
 			return allBoxes;
 		};
 
+      //GroupHas
+      this.groupHas = function (groupToken){
+  			var response = new DigitSet();
+	  		this[groupToken].forEach( function( element ){
+		      if ( element.size() === 1 ) {
+		      response.addSet( element );
+            }
+  		   });
+         return response;
+      };
+
+
+
+
+      this.getPossible = function(cellToken) {
+         return this[cellToken].array();
+      };
+
+      this.setPossible = function(cellToken, digiSet) {
+         this[cellToken] = digiSet;
+      };
+
+      this.string = function() {
+
+         var string = "";
+
+         for (var i = 0; i < 80; i++) {
+
+            if (  this[i].isUncertain() ) {
+
+               string += ".";
+            }
+            else {
+               string += (this[i].arrayPossible())[0];
+            }
+
+         }
+         return string;
+      };
+
+      this.save = function() {
+         return this.string();
+      };
+
+      this.restore = function(string) {
+         this = new Grid(string)
+      };
+
+
+
+
+
 
 	} //end of instance function
 
@@ -255,8 +420,8 @@ Grid = ( function() {	//start of constructor
 
 
 
-// var testString = '.94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..';
-// var tester = new Grid( testString );
+var testString = '.94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..';
+var tester = new Grid( testString );
 
 // console.log( 'object ' + tester );
 // console.log( 'array of ten, all true ' + tester[0].possibilities );
