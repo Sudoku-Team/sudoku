@@ -1,0 +1,41 @@
+* {   
+    font-family: 'Josefin Slab', serif;
+    font-size: 1.15em;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+table {
+    border-collapse: collapse;
+    border: .5px solid white;
+    width: 90%;
+    height: 90%;
+    margin: 0 auto; 
+    background: rgba(8, 24, 39, 0.41);
+}
+
+tr {
+    vertical-align: middle;
+    text-align: center;
+    
+}
+
+td {
+    border: 1px solid white;
+    width: 10%;
+}
+
+#row2 {
+    
+    border-bottom: 10px solid white;
+    
+}
+
+#row5 {
+    
+    border-bottom: 10px solid white;
+}
+
+.borderCell {
+    border-left: 10px solid white;
+}

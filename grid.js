@@ -1,6 +1,12 @@
 // var DigitSet = require( './digitset.js' );
 // var Viewer = require('./viewer.js');
 
+if (typeof require === 'function'){
+    
+    var DigitSet = require('./digitset.js');
+}
+
+
 Grid = ( function() {	//start of constructor
 
 	function grid ( initialString ) { 		//start of instance
@@ -239,7 +245,7 @@ Grid = ( function() {	//start of constructor
 
          var string = "";
 
-         for (var i = 0; i < 80; i++) {
+         for (var i = 0; i <= 80; i++) {
 
             if (  this[i].isUncertain() ) {
 
@@ -271,21 +277,21 @@ Grid = ( function() {	//start of constructor
 		};
 
 		this.getNeighborhood = function ( cellToken ) {
-      	var answer = new DigitSet();
+            var answer = new DigitSet();
 
-      	var rowToken = this.getRowCellToken( cellToken );
-      	var rowPossibilities = this.groupHas( rowToken );
-      	answer.addSet ( rowPossibilities );
+            var rowToken = this.getRowCellToken( cellToken );
+            var rowPossibilities = this.groupHas( rowToken );
+            answer.addSet ( rowPossibilities );
 
-      	var columnToken = this.getColCellToken( cellToken );
-      	var columnPossibilities = this.groupHas( columnToken );
-      	answer.addSet ( columnPossibilities );
+            var columnToken = this.getColCellToken( cellToken );
+            var columnPossibilities = this.groupHas( columnToken );
+            answer.addSet ( columnPossibilities );
 
-      	var boxToken = this.getBoxCellToken( cellToken );
-      	var boxPossibilities = this.groupHas( boxToken );
-      	answer.addSet ( boxPossibilities );
+            var boxToken = this.getBoxCellToken( cellToken );
+            var boxPossibilities = this.groupHas( boxToken );
+            answer.addSet ( boxPossibilities );
 
-      	return answer;
+            return answer;
       };
 
 		this.groupNeeds = function (groupToken){
@@ -307,8 +313,8 @@ Grid = ( function() {	//start of constructor
 })(); //end IFFE
 
 
-var testString = '.94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..';
-var tester = new Grid( testString );
+//var testString = '.94...13..............76..2.8..1.....32.........2...6.....5.4.......8..7..63.4..';
+//var tester = new Grid( testString );
 
 // console.log( 'object ' + tester );
 // console.log( 'array of ten, all true ' + tester[0].possibilities );
